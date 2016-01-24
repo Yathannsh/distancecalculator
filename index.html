@@ -2,7 +2,7 @@
 <html >
   <head>
     <meta charset="UTF-8">
-    <title>FOOSASIA TRACKER</title>
+    <title>GEO-TRACKER</title>
     <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
     <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
     <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Open+Sans:400,600'>
@@ -48,6 +48,7 @@
       function toRad(Value) {return Value * Math.PI / 180;}
       //End of Haversine 
 
+
       // Difference in timezone calculator 
       function calculateTime() {
       var l1 = document.getElementById("long_1").value;//Fetches value of Longitude1
@@ -71,22 +72,43 @@
       hr = Math.floor(tm / 60);
       mn = Math.round(tm % 60);
       document.getElementById("resultt").innerHTML = hr+"&nbsp;"+"Hours" +"<br>"+mn+"&nbsp;"+"Minutes";}}
+
+      
+
+      
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function () {                
+                //only numeric with crl v c x +tab with no spaces
+                $('input#lat_1,input#long_1,input#lat_2,input#long_2').on('keypress', function (event) {
+                    var keyCode = window.event ? event.keyCode : event.which;
+                    //codes for 0-9
+                    if (keyCode < 48 || keyCode > 57) {
+                        //codes for backspace, delete, enter
+                        if (keyCode !== 0 && keyCode !== 8 && keyCode !== 13 && !event.ctrlKey) {
+                            event.preventDefault();
+                        }
+                    }
+                }); 
+              });
     </script>
   </head>
   <body>
       <div class="container">
         <div class="map">
           <div class="map__header">
-            <h3> FOSSASIA TRACKER </h3>
+            <h3>World Distance Calculator </h3>
+            <p>Refresh to input new locations for convenience</p>
             <a href ="index.html"> <i class="fa fa-repeat cancel active"></i></a> 
            <span id="title"> Input coordinates of location 1</span>
+           <p>(The default is set to the location of Google HQ)</p>
             <div class="destinations">
               <div class="row">
                 <div class="col-xs-8">
-                  <input type="text" id ="lat_1"class="form-control from" placeholder="Input Latitudes">
+                  <input type="text" id ="lat_1"class="form-control from" placeholder="Input Latitudes" value="37.3894">
                 </div>
                 <div class="col-xs-4">
-                  <select id ="lad1"class="form-control">
+                  <select id ="lad1"class="form-control" value="N">
                     <option>N</option>
                     <option>S</option>
                   </select>
@@ -94,10 +116,10 @@
               </div>
               <div class="row">
                 <div class="col-xs-8">
-                  <input type="text" id ="long_1"class="form-control to"  placeholder="Input Longitudes">
+                  <input type="text" id ="long_1"class="form-control to"  placeholder="Input Longitudes" value=" 122.0819">
                 </div>
                 <div class="col-xs-4">
-                  <select id ="l1d"class="form-control">
+                  <select id ="l1d"class="form-control" >
                     <option>W</option>
                     <option>E</option>
                   </select>
@@ -105,10 +127,11 @@
               </div>
             </div>
              <span id="title"> Input coordinates of location 2</span> 
+             <p> The default is set to the location of Singapore- the event place for FOSSASIA's 2015 event</p> 
              <div class="destinations">
               <div class="row">
                 <div class="col-xs-8">
-                  <input type="text" id ="lat_2" class="form-control from" placeholder="Input Latitudes">
+                  <input type="text" id ="lat_2" class="form-control from" placeholder="Input Latitudes" value="1.3000">
                 </div>
                 <div class="col-xs-4">
                   <select id ="lad2"class="form-control">
@@ -119,18 +142,18 @@
               </div>
               <div class="row">
                 <div class="col-xs-8">
-                  <input id ="long_2" type="text" class="form-control to"  placeholder="Input Longitudes">
+                  <input id ="long_2" type="text" class="form-control to"  placeholder="Input Longitudes" value="103.8000" >
                 </div>
                 <div class="col-xs-4">
-                  <select id ="l2d" class="form-control">
+                  <select id ="l2d" class="form-control"  >
                     <option>W</option>
-                    <option>E</option>
+                    <option selected>E</option>
                   </select>
                 </div>
               </div>
               <div class="row" >
                 <div class="col-xs-6 col-xs-offset-3 swap-destinations">
-                  <i class="fa fa-angle-double-right" type="submit" onclick=" calculateTime(); calculateDistanceinKms();" ></i>
+                  <i class="fa fa-angle-double-right" type="submit" onclick=" calculateTime(); calculateDistanceinKms(); defualtmsg();" ></i>
                 </div>
               </div>
             </div>
@@ -150,6 +173,7 @@
                   <span class="transit-time">Rounded figures</span>
                 </div>
                 <div class="col-xs-4 text-right">
+
                   <span class="estimated-time" id="result"></span>
                 </div>
               </div>
@@ -165,6 +189,7 @@
                 </div>
                 <div class="col-xs-4 text-right">
                   <span class="estimated-time" id="resultt"></span>
+
                 </div>
               </div>
             </div>
